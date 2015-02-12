@@ -1,6 +1,18 @@
-;(function(m){
+
+;(function(exports){
 
     "use strict";
+
+Backbone.GeoModel = Backbone.Model.extend({
+    geo: function(){
+
+
+
+navigator.geolocation.getCurrentPosition(success, error, options)
+
+    }
+
+})
 
 var WeatherModel = Backbone.Model.extend({
     url: function(){
@@ -12,6 +24,25 @@ var WeatherModel = Backbone.Model.extend({
         "?callback=?"
         ].join('')
     },
+
+var options = {
+    enableHighAccuracy: true,
+    timeout: 12000,
+    maximumAge: 50000
+};
+
+function success(pos){
+    var crds = pos.cords;
+    console.log('Your current position is');
+    console.log('Latitude :' + crds.lat);
+    console.log('Longitude :' + crds.lng);
+};
+
+function error(err) {
+    console.log(error message)
+
+};
+
     defaults: {
         forcecast: "Its Going to Rain",
         lat: 5,
@@ -27,6 +58,8 @@ var WeatherModel = Backbone.Model.extend({
 
     },
     initialize: function(){
+        console.log("WeatherModel initialized")
+
         this.on("change", function(model, options){
             console.log("see the change?")
         })
