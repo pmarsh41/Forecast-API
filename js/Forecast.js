@@ -8,6 +8,7 @@
 
 
 
+
             navigator.geolocation.getCurrentPosition(success, error, WeatherModel.options)
 
         }
@@ -61,7 +62,8 @@
             console.log("WeatherModel initialized")
 
             this.on("change", function(model, options) {
-                console.log("see the change?")
+                console.log(model)
+                console.log(options)
             })
             this.on("change:forcecast", function(model, value, options) {
                 console.log("weather forcast changed")
@@ -77,5 +79,7 @@
         access_token: "568f74ba4d47528af29a3a846957dc4a"
     })
 
-
+exports.instance.set("cheese", "yellow")
+exports.instance.set("cheese", "white")
+exports.instance.get("cheese")
 })(typeof module === "object" ? module.exports : window);
