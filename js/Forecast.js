@@ -26,7 +26,7 @@
             ].join('')
         },
 
-        options : {
+        options: {
             enableHighAccuracy: true,
             timeout: 12000,
             maximumAge: 50000
@@ -79,7 +79,8 @@
         access_token: "568f74ba4d47528af29a3a846957dc4a"
     })
 
-exports.instance.set("cheese", "yellow")
-exports.instance.set("cheese", "white")
-exports.instance.get("cheese")
+    exports.instance.set("lat", "lng")
+    exports.instance.set("lat", "lng", "options")
+    exports.instance.get("model", "errorMessage", "options")
+
 })(typeof module === "object" ? module.exports : window);
