@@ -13,6 +13,7 @@ function app(){
         {url: "./bower_components/lodash/lodash.min.js"},
         {url: "./bower_components/backbone/backbone.js"},
         {url: "./js/Forecast.js"}
+
     ).then(function(){
         document.querySelector("html").style.opacity = 1;
         // start app?
