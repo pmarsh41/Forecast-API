@@ -1,8 +1,8 @@
 ;
 (function(exports) {
-///Bookmark, Line 74///
+    ///Bookmark, Line 74///
     "use strict";
-//Constructor Code
+    //Constructor Code
     Backbone.GeoModel = Backbone.Model.extend({
         getGeo: function() {
 
@@ -33,13 +33,7 @@
 
         url: function() {
             return [
-            'https://api.forecast.io/forecast/',
-            , this.get('apiKey')
-            , '/',
-            , this.get('lat')
-            , ','
-            , this.get('lng')
-            , '?callback=?' //required for JSON-P
+                'https://api.forecast.io/forecast/', , this.get('apiKey'), '/', , this.get('lat'), ',', this.get('lng'), '?callback=?' //required for JSON-P
 
             ].join('')
         },
@@ -55,31 +49,37 @@
             ///getGeo "get's" coordinates///
             this.getGeo()
                 ///after getGeo data is recieved, geData is passed as a parameter in a function///
-               .then(function(geData){
-                console.log(geData)
-                    ///geData lat.long value is set to new weatherModel instance///
-                    self.set('lat' , geData.coords.latitude)
-                    self.set({lng : geData.coords.longitude})
+                .then(function(geData) {
+                    console.log(geData)
+                        ///geData lat.long value is set to new weatherModel instance///
+                    self.set('lat', geData.coords.latitude)
+                    self.set({
+                        lng: geData.coords.longitude
+                    })
 
                     console.log(self.attributes)
                     console.log(self.url())
-                    ///fetch takes a "url" string and retrieves the API data,
-                    ///then weData object is returned and passed as a parameter///
-                    self.fetch().then(
+                        ///fetch takes a "url" string and retrieves the API data,
+                        ///then weData object is returned and passed as a parameter///
+                    $.when(
+                        self.fetch(),
+                        self.get("theView").loadTemplate("templatecast")).then(function(weData, myTemplate) {
+                            console.log(weData)
+                            console.log(myTemplate)
+                            var myWeData = weData[0] //get data-obj from array
+                    var compiledHtml = _.template(myTemplate);
+                    var compiledData = compiledHtml(myWeData)
+                    console.log(compiledData)
+                    self.get("theView").el.innerHTML=compiledData
+                                ///Next, we have to populate our html template with our weather data///
+                                ///Then, our template must be appended to the page///
 
-                    function(weData){
-                        console.log(self)
-                        console.log(self.get("theView"))
-                        console.log(self.get("theView").el)
-                    ///Next, we have to populate our html template with our weather data///
-                    ///Then, our template must be appended to the page///
-
-                    }
+                        }
 
                     )
 
 
-            })
+                })
         }
 
     });
@@ -89,7 +89,7 @@
         el: ".container",
 
         loadTemplate: function(filename) {
-            return $.get('./templates/'+filename+'.html').then(function(htmlData){
+            return $.get('./templates/' + filename + '.html').then(function(htmlData) {
                 return htmlData;
             })
         },
@@ -98,17 +98,14 @@
             console.log(this);
             console.log(this.el)
 
-            this.loadTemplate("templatecast").then(function(temphtml){
-            console.log(temphtml);
 
-        })
 
 
         }
 
     });
 
-//Execution Code
+    //Execution Code
 
     var fview = new ForecastView()
 
