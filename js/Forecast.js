@@ -3,6 +3,30 @@
     ///Bookmark, Line 74///
     "use strict";
     //Constructor Code
+
+    var WeatherRouter = Backbone.Router.extend({
+        routes: {
+            // "#route" : "router-method"
+            "": "showWeather"
+        },
+
+        showWeather: function() {
+            var fview = new ForecastView()
+
+            var wmodel = new WeatherModel({
+                'apiKey': '568f74ba4d47528af29a3a846957dc4a',
+                'theView': fview
+
+            })
+
+        },
+
+        initialize: function() {
+            Backbone.history.start()
+        }
+
+
+    })
     Backbone.GeoModel = Backbone.Model.extend({
         getGeo: function() {
 
@@ -67,10 +91,10 @@
                             console.log(weData)
                             console.log(myTemplate)
                             var myWeData = weData[0] //get data-obj from array
-                    var compiledHtml = _.template(myTemplate);
-                    var compiledData = compiledHtml(myWeData)
-                    console.log(compiledData)
-                    self.get("theView").el.innerHTML=compiledData
+                            var compiledHtml = _.template(myTemplate);
+                            var compiledData = compiledHtml(myWeData)
+                            console.log(compiledData)
+                            self.get("theView").el.innerHTML = compiledData
                                 ///Next, we have to populate our html template with our weather data///
                                 ///Then, our template must be appended to the page///
 
@@ -107,12 +131,8 @@
 
     //Execution Code
 
-    var fview = new ForecastView()
+    var myWeather = new WeatherRouter()
 
-    var wmodel = new WeatherModel({
-        'apiKey': '568f74ba4d47528af29a3a846957dc4a',
-        'theView': fview
-    })
 
 
 })(typeof module === "object" ? module.exports : window);
